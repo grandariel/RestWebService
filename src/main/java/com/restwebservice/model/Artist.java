@@ -1,21 +1,25 @@
 package com.restwebservice.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Daniel Jastrzębski on 21.09.2016.
  */
 @Entity
-public class Artist {
+public class Artist extends Performer {
 
-    @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    @Column(name = "artist_id")
+    private long artistId;
     private String name;
     private String surname;
+    private Date birthday;
+    private String nationality;
+    @ManyToOne
+    @JoinColumn(name = "band_id")
+    private Band band;
 
     public Artist(){}
 
@@ -24,12 +28,36 @@ public class Artist {
         this.surname = surname;
     }
 
-    public long getId() {
-        return id;
+    public long getArtistId() {
+        return artistId;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setArtistId(long artistId) {
+        this.artistId = artistId;
+    }
+
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
+    }
+
+    public String getNationality() {
+        return nationality;
+    }
+
+    public void setNationality(String nationality) {
+        this.nationality = nationality;
+    }
+
+    public Band getBand() {
+        return band;
+    }
+
+    public void setBand(Band band) {
+        this.band = band;
     }
 
     public String getName() {
@@ -46,5 +74,10 @@ public class Artist {
 
     public void setSurname(String surname) {
         this.surname = surname;
+    }
+
+    @Override
+    public String toString(){
+        return "id: " + getId() + ", name: " + name + ", surname: " + surname;
     }
 }

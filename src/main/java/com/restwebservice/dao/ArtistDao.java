@@ -8,5 +8,4 @@ import org.springframework.stereotype.Repository;
  * Created by Daniel Jastrzębski on 21.09.2016.
  */
 @Repository
-public interface ArtistDao extends CrudRepository<Artist, Long> {
-}
+public interface ArtistDao extends CrudRepository<Artist, Long> {}
