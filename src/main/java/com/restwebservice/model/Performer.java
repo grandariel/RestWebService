@@ -1,5 +1,9 @@
 package com.restwebservice.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -8,13 +12,14 @@ import java.util.List;
  */
 @Entity
 @Inheritance(strategy=InheritanceType.JOINED)
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id", scope=Performer.class)
 public abstract class Performer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "performer_id")
     private long id;
-    @OneToMany(mappedBy = "performer")
+    @OneToMany(mappedBy = "performer", fetch = FetchType.EAGER)
     private List<Album> albumList;
 
     public long getId() {

@@ -1,5 +1,10 @@
 package com.restwebservice.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
@@ -8,6 +13,7 @@ import java.util.List;
  * Created by Daniel Jastrzębski on 05.10.2016.
  */
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id", scope=Album.class)
 public class Album {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -15,7 +21,7 @@ public class Album {
     private long id;
     private String name;
     private Date releaseDate;
-    @OneToMany(mappedBy = "album")
+    @OneToMany(mappedBy = "album", fetch = FetchType.EAGER)
     private List<Track> trackList;
     @ManyToOne
     @JoinColumn(name = "performer_id")

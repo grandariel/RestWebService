@@ -8,12 +8,14 @@ import com.restwebservice.model.Album;
 import com.restwebservice.model.Artist;
 import com.restwebservice.model.Message;
 import com.restwebservice.model.Track;
+import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.persistence.EntityManagerFactory;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -71,5 +73,10 @@ public class MainController {
         trackDao.save(track2);
 
         return new Message("Test");
+    }
+
+    @RequestMapping("/test2")
+    public Album getTest(){
+        return albumDao.findOne(1L);
     }
 }

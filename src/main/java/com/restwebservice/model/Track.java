@@ -1,5 +1,9 @@
 package com.restwebservice.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlIDREF;
 
@@ -7,6 +11,7 @@ import javax.xml.bind.annotation.XmlIDREF;
  * Created by Daniel Jastrzębski on 05.10.2016.
  */
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id", scope=Track.class)
 public class Track {
 
     @Id
