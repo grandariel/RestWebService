@@ -15,9 +15,6 @@ import java.util.List;
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id", scope=Artist.class)
 public class Artist extends Performer {
 
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "artist_id")
-    private long artistId;
     private String name;
     private String surname;
     private Date birthday;
@@ -31,14 +28,6 @@ public class Artist extends Performer {
     public Artist(String name, String surname) {
         this.name = name;
         this.surname = surname;
-    }
-
-    public long getArtistId() {
-        return artistId;
-    }
-
-    public void setArtistId(long artistId) {
-        this.artistId = artistId;
     }
 
     public Date getBirthday() {

@@ -1,7 +1,9 @@
 package com.restwebservice.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.restwebservice.dao.AlbumDao;
 import com.restwebservice.dao.ArtistDao;
+import com.restwebservice.model.Album;
 import com.restwebservice.model.Artist;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.List;
 
 import static org.springframework.web.bind.annotation.RequestMethod.*;
 

@@ -23,8 +23,7 @@ public class Track {
     @JoinColumn(name = "album_id")
     private Album album;
 
-    public Track() {
-    }
+    public Track() {}
 
     public Track(String title) {
         this.title = title;

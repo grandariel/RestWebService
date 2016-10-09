@@ -37,4 +37,14 @@ public abstract class Performer {
     public void setAlbumList(List<Album> albumList) {
         this.albumList = albumList;
     }
+
+    public void addAlbum(Album album) {
+        this.albumList.add(album);
+        album.setPerformer(this);
+    }
+
+    public void removeAlbum(Album album) {
+        this.albumList.remove(album);
+        album.setPerformer(null);
+    }
 }

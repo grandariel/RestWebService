@@ -1,8 +1,6 @@
 package com.restwebservice.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
@@ -26,6 +24,8 @@ public class Album {
     @ManyToOne
     @JoinColumn(name = "performer_id")
     private Performer performer;
+
+    public Album () {}
 
     public long getId() {
         return id;
@@ -57,6 +57,11 @@ public class Album {
 
     public void setTrackList(List<Track> trackList) {
         this.trackList = trackList;
+    }
+
+    public void addTrack(Track track) {
+        this.trackList.add(track);
+        track.setAlbum(this);
     }
 
     public Performer getPerformer() {

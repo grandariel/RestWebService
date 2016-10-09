@@ -9,22 +9,11 @@ import java.util.List;
 @Entity
 public class Band extends Performer {
 
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "band_id")
-    private long bandId;
     private String bandName;
     @OneToMany(mappedBy = "band")
     private List<Artist> artists;
 
     public Band() {}
-
-    public long getBandId() {
-        return bandId;
-    }
-
-    public void setBandId(long bandId) {
-        this.bandId = bandId;
-    }
 
     public String getBandName() {
         return bandName;
