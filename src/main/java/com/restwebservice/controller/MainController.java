@@ -1,26 +1,17 @@
 package com.restwebservice.controller;
 
-import com.restwebservice.dao.AlbumDao;
-import com.restwebservice.dao.ArtistDao;
-import com.restwebservice.dao.BandDao;
-import com.restwebservice.dao.TrackDao;
-import com.restwebservice.model.Album;
-import com.restwebservice.model.Artist;
-import com.restwebservice.model.Message;
-import com.restwebservice.model.Track;
-import org.hibernate.Session;
+import com.restwebservice.dao.*;
+import com.restwebservice.model.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.persistence.EntityManagerFactory;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
-
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import java.util.Set;
 
 /**
  * Created by Daniel Jastrzębski on 05.10.2016.
@@ -32,51 +23,59 @@ public class MainController {
     private static Logger LOGGER = LoggerFactory.getLogger(MainController.class);
 
     @Autowired
-    ArtistDao artistDao;
+    UserDao userDao;
     @Autowired
-    AlbumDao albumDao;
+    UserListDao userListDao;
     @Autowired
-    BandDao bandDao;
+    MovieDao movieDao;
     @Autowired
-    TrackDao trackDao;
+    PersonDao personDao;
+    @Autowired
+    MovieStatsDao movieStatsDao;
 
-    @RequestMapping(method = GET)
+    @RequestMapping()
     public Message getMain(){
-        LOGGER.info("Hello");
         return new Message("Hello World!");
     }
 
-    @RequestMapping("/test")
+    @RequestMapping("/testdata")
     public Message getTestData(){
-        Album album = new Album();
-        album.setName("Album1");
-        album.setReleaseDate(new Date());
+        Person person1 = new Person("Daniel", "Hawk", "Poland");
+        Person person2 = new Person("Ola", "Bawk", "USA");
 
-        Track track1 = new Track("Track1");
-        Track track2 = new Track("Track2");
-        List<Track> trackList1 = new ArrayList<Track>();
-        trackList1.add(track1);
-        trackList1.add(track2);
-        album.setTrackList(trackList1);
-        track1.setAlbum(album);
-        track2.setAlbum(album);
+        Set<Person> cast1 = new HashSet<Person>();
+        cast1.add(person1);
+        cast1.add(person2);
 
-        Artist artist = new Artist();
-        album.setPerformer(artist);
-        artist.setName("Daniel");
-        artist.setSurname("Hawk");
-        artist.setBirthday(new Date());
-        artist.setNationality("Polish");
-        artistDao.save(artist);
-        albumDao.save(album);
-        trackDao.save(track1);
-        trackDao.save(track2);
+        Set<Person> cast2 = new HashSet<Person>();
+        cast2.add(person2);
+
+        Movie movie1 = new Movie("Shawshank Redemption", 142, "Example of description", person1, cast2);
+        Movie movie2 = new Movie("Godfather", 190, "Example of description", person1, cast1);
+        Movie movie3 = new Movie("Forrest Gump", 130, "Example of description", person1, cast1);
+        Movie movie4 = new Movie("Pulp Fiction", 100, "Example of description", person1, cast2);
+        Movie movie5 = new Movie("Lord of the Rings", 200, "Example of description", person1, cast1);
+
+        UserList userList = new UserList();
+        userList.addMovie(movie3);
+        userList.addMovie(movie5);
+        User user1 = new User("daniel", userList);
+
+        personDao.save(person1);
+        personDao.save(person2);
+
+        movieDao.save(movie1);
+        movieDao.save(movie2);
+        movieDao.save(movie3);
+        movieDao.save(movie4);
+        movieDao.save(movie5);
+
+        for(MovieStats m : userList.getMovieMap().values())
+            movieStatsDao.save(m);
+
+        userListDao.save(userList);
+        userDao.save(user1);
 
         return new Message("Test");
-    }
-
-    @RequestMapping("/test2")
-    public Album getTest(){
-        return albumDao.findOne(1L);
     }
 }
