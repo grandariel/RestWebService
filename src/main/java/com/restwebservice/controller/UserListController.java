@@ -71,7 +71,6 @@ public class UserListController {
       }
    }
 
-
    @RequestMapping(value = "/movies/{movieId}/stats", method = POST)
    public ResponseEntity postMovieStats(@PathVariable long userId, @PathVariable long movieId,
                                         @RequestBody String movieStatsJson) {
